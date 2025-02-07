@@ -1,5 +1,5 @@
-import UpcomingFlightsScreen from "@/presentation/features/upcoming-flights/upcoming-flights-screen";
+import AllLaunchesScreen from "@/presentation/features/all-launches/all-launches-screen";
 
 export default function HomeScreen() {
-  return <UpcomingFlightsScreen />;
+  return <AllLaunchesScreen />;
 }

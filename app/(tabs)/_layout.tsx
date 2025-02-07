@@ -31,18 +31,18 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Flights",
-          headerTitle: "Upcoming Flights",
+          title: "Launches",
+          headerTitle: "All Launches",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="rocket-outline" size={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="past-flights"
+        name="next-launch"
         options={{
-          title: "Past",
-          headerTitle: "Past Flights",
+          title: "Next Launch",
+          headerTitle: "Next Launch",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="time-outline" size={size} color={color} />
           ),
