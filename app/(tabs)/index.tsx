@@ -1,13 +1,5 @@
-import useStyles from "@/theme/styles";
-import { View, Text } from "react-native";
+import UpcomingFlightsScreen from "@/presentation/features/upcoming-flights/upcoming-flights-screen";
 
 export default function HomeScreen() {
-  const styles = useStyles();
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Home Screen</Text>
-    </View>
-  );
+  return <UpcomingFlightsScreen />;
 }
-
