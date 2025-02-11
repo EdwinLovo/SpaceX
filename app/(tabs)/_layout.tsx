@@ -11,7 +11,7 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: theme.textPrimary,
-        headerShown: true,
+        headerShown: false,
         headerStyle: {
           backgroundColor: theme.surface,
         },
@@ -29,7 +29,7 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
           title: "Launches",
           headerTitle: "All Launches",
@@ -43,6 +43,7 @@ export default function TabLayout() {
         options={{
           title: "Next Launch",
           headerTitle: "Next Launch",
+          headerShown: true,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="time-outline" size={size} color={color} />
           ),

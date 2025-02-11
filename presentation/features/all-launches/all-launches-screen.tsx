@@ -4,9 +4,12 @@ import { useFetchLaunches } from "@/data/hooks/use-fetch-launches";
 import { useTheme } from "@/theme/theme-context";
 import LoadingView from "@/presentation/shared/components/loading-view";
 import ErrorView from "@/presentation/shared/components/error-view";
+import { useRouter } from "expo-router";
 
 const AllLaunchesScreen = () => {
   const styles = useStyles();
+  const router = useRouter();
+
   const { data: launches, isLoading, error } = useFetchLaunches();
 
   if (isLoading) return <LoadingView />;
@@ -20,7 +23,7 @@ const AllLaunchesScreen = () => {
         renderItem={({ item }) => (
           <UpcomingFlightCard
             launch={item}
-            onPress={() => alert(`Details for ${item.flight_number}`)}
+            onPress={() => router.push(`/home/launch-details/2`)}
           />
         )}
       />
