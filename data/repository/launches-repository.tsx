@@ -1,4 +1,4 @@
-import { getAllLaunchesUrl, getNextLaunchUrl } from "../api/api-service";
+import { getAllLaunchesUrl, getLaunchByFlightNumberUrl, getNextLaunchUrl } from "../api/api-service";
 import { Launch } from "../models/launch";
 
 class LaunchesRepositoryImpl {
@@ -15,6 +15,17 @@ class LaunchesRepositoryImpl {
     const response = await fetch(getNextLaunchUrl);
     if (!response.ok) {
       throw new Error("Failed to fetch next launch");
+    }
+
+    return response.json();
+  }
+
+  async getLaunchByFlightNumber(flightNumber: string): Promise<Launch> {
+    const response = await fetch(
+      getLaunchByFlightNumberUrl.replace("{flightNumber}", flightNumber)
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch launch details");
     }
 
     return response.json();

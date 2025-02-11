@@ -23,7 +23,7 @@ const AllLaunchesScreen = () => {
         renderItem={({ item }) => (
           <UpcomingFlightCard
             launch={item}
-            onPress={() => router.push(`/home/launch-details/2`)}
+            onPress={() => router.push(`/home/launch-details/${item.flight_number}`)}
           />
         )}
       />
