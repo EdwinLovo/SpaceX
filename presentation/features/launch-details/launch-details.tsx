@@ -5,7 +5,7 @@ import useTextStyles from "@/presentation/shared/styles/text-styles";
 import LoadingView from "@/presentation/shared/components/loading-view";
 import ErrorView from "@/presentation/shared/components/error-view";
 import { useLocalSearchParams } from "expo-router";
-import { useFetchLaunchByFlightNumber } from "@/data/hooks/use-fetch-launch-by-flight-number";
+import { useFetchLaunchByFlightNumber } from "@/data/hooks/launches/use-fetch-launch-by-flight-number";
 
 const LaunchDetailsScreen = () => {
   const { id } = useLocalSearchParams<{ id: string }>();

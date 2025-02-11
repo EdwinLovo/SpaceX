@@ -8,12 +8,19 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useTheme } from "@/theme/theme-context";
+import { useSignIn } from "@/data/hooks/auth/use-signin";
 
 const SignInScreen = () => {
   const { theme } = useTheme();
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const { mutate: login, isError } = useSignIn();
+
+  const handleLogin = async () => {
+    login({ username: username, password: password });
+  };
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
@@ -42,7 +49,8 @@ const SignInScreen = () => {
         placeholderTextColor={theme.textSecondary}
       />
 
-      <TouchableOpacity onPress={() => router.push("/home")}
+      <TouchableOpacity
+        onPress={handleLogin}
         style={[styles.button, { backgroundColor: theme.primary }]}
       >
         <Text style={[styles.buttonText, { color: theme.background }]}>

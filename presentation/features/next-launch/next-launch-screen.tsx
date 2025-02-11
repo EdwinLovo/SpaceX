@@ -2,9 +2,9 @@ import React from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
 import { useTheme } from "@/theme/theme-context";
 import useTextStyles from "@/presentation/shared/styles/text-styles";
-import { useFetchNextLaunch } from "@/data/hooks/use-fetch-next-launch";
 import LoadingView from "@/presentation/shared/components/loading-view";
 import ErrorView from "@/presentation/shared/components/error-view";
+import { useFetchNextLaunch } from "@/data/hooks/launches/use-fetch-next-launch";
 
 const NextLaunchScreen = () => {
   const { data: launch, isLoading, error } = useFetchNextLaunch();

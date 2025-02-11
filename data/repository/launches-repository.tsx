@@ -1,5 +1,9 @@
-import { getAllLaunchesUrl, getLaunchByFlightNumberUrl, getNextLaunchUrl } from "../api/api-service";
-import { Launch } from "../models/launch";
+import {
+  getAllLaunchesUrl,
+  getLaunchByFlightNumberUrl,
+  getNextLaunchUrl,
+} from "../api/api-service";
+import { Launch } from "../models/response/launches/launch";
 
 class LaunchesRepositoryImpl {
   async getAllLaunches(): Promise<Launch[]> {
