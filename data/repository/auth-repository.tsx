@@ -15,7 +15,7 @@ class AuthRepositoryImpl {
     // Example of a successful login response (simulate API response)
     const response: AuthResponse = {
       token:
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTczOTM5MzMxOCwiZXhwIjoxNzM5Mzk2OTE4fQ.kOAwppg5-wKCAutM56gVbIbZiV49OlM61PqZvSgHJTw",
       refreshToken: "refresh_token_example",
     };
 

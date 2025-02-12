@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { useTheme } from "@/theme/theme-context";
+import { useTheme } from "@/context/theme-context";
 import { useSignIn } from "@/data/hooks/auth/use-signin";
 import { useErrorAlert } from "@/presentation/shared/hooks/useErrorAlert";
 

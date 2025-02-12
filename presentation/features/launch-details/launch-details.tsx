@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
-import { useTheme } from "@/theme/theme-context";
+import { useTheme } from "@/context/theme-context";
 import useTextStyles from "@/presentation/shared/styles/text-styles";
 import LoadingView from "@/presentation/shared/components/loading-view";
 import ErrorView from "@/presentation/shared/components/error-view";

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { useTheme } from "@/theme/theme-context";
+import { useTheme } from "@/context/theme-context";
 
 const SignUpScreen = () => {
   const { theme } = useTheme();
@@ -38,7 +38,7 @@ const SignUpScreen = () => {
       />
 
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Sign Un</Text>
+        <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => router.back()}>

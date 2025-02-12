@@ -1,6 +1,6 @@
 import { View, FlatList, StyleSheet } from "react-native";
 import UpcomingFlightCard from "./launch-flight-card";
-import { useTheme } from "@/theme/theme-context";
+import { useTheme } from "@/context/theme-context";
 import LoadingView from "@/presentation/shared/components/loading-view";
 import ErrorView from "@/presentation/shared/components/error-view";
 import { useRouter } from "expo-router";
@@ -23,7 +23,9 @@ const AllLaunchesScreen = () => {
         renderItem={({ item }) => (
           <UpcomingFlightCard
             launch={item}
-            onPress={() => router.push(`/home/launch-details/${item.flight_number}`)}
+            onPress={() =>
+              router.push(`/home/launch-details/${item.flight_number}`)
+            }
           />
         )}
       />

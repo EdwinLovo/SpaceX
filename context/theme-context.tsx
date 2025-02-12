@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useColorScheme } from "react-native";
-import { DarkTheme, LightTheme, ThemeType } from "./theme";
+import { DarkTheme, LightTheme, ThemeType } from "../presentation/theme/theme";
 
 type ThemeContextType = {
   theme: ThemeType;
@@ -8,7 +8,9 @@ type ThemeContextType = {
   isDarkMode: boolean;
 };
 
-export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+export const ThemeContext = createContext<ThemeContextType | undefined>(
+  undefined
+);
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const systemColorScheme = useColorScheme();
