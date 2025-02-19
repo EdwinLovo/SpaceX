@@ -6,8 +6,8 @@ A **React Native** application built with **Expo** that follows a **feature-base
 
 ```
 📦 SpaceX
-├── .expo/                # Expo related files
-├── .vscode/              # VSCode settings and extensions
+├── .expo/                
+├── .vscode/              
 ├── app/                  # Handles navigation and layout using Expo Router
 ├── context/              # Global React context providers (Auth, Theme, etc.)
 ├── data/                 # Data handling (API, database, preferences, etc.)
@@ -15,23 +15,23 @@ A **React Native** application built with **Expo** that follows a **feature-base
 │   ├── data-hooks/       # Custom hooks for data retrieval
 │   ├── models/           # TypeScript models for data types
 │   ├── repository/       # Manages data retrieval from API, DB, etc.
-├── node_modules/         # Dependencies
+├── node_modules/         
 ├── presentation/         # UI layer
 │   ├── assets/           # Common assets
 │   ├── features/         # Screens, feature-specific components, hooks, constants
-│   ├── shared/           # Reusable UI components, styles, and hooks
+│   ├── shared/           # Reusable UI components, styles, and hooks, etc.
 │   │   ├── components/   # Common UI components
 │   │   ├── styles/       # Global styling
 │   │   ├── ui-hooks/     # Hooks related to UI behavior
 │   ├── theme/            # Theme configuration
-├── scripts/              # Utility scripts
-├── .gitignore            # Git ignored files
-├── app.json              # Expo configuration
-├── expo-env.d.ts         # Environment type definitions
-├── package.json          # Project dependencies
-├── package-lock.json     # Lock file for dependencies
-├── README.md             # Project documentation
-├── tsconfig.json         # TypeScript configuration
+├── scripts/              
+├── .gitignore            
+├── app.json              
+├── expo-env.d.ts         
+├── package.json          
+├── package-lock.json     
+├── README.md             
+├── tsconfig.json         
 ```
 
 ## Getting Started
