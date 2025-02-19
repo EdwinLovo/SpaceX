@@ -1,50 +1,76 @@
-# Welcome to your Expo app 👋
+# SpaceX App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A **React Native** application built with **Expo** that follows a **feature-based architecture** with a **simplified version of Clean Architecture** to separate the UI layer from the data layer while keeping it simple. It uses **Expo Router** for navigation and **TypeScript** for type safety.
 
-## Get started
+## Project Structure
 
-1. Install dependencies
+```
+📦 SpaceX
+├── .expo/                # Expo related files
+├── .vscode/              # VSCode settings and extensions
+├── app/                  # Handles navigation and layout using Expo Router
+├── context/              # Global React context providers (Auth, Theme, etc.)
+├── data/                 # Data handling (API, database, preferences, etc.)
+│   ├── api/              # API endpoint constants
+│   ├── data-hooks/       # Custom hooks for data retrieval
+│   ├── models/           # TypeScript models for data types
+│   ├── repository/       # Manages data retrieval from API, DB, etc.
+├── node_modules/         # Dependencies
+├── presentation/         # UI layer
+│   ├── assets/           # Common assets
+│   ├── features/         # Screens, feature-specific components, hooks, constants
+│   ├── shared/           # Reusable UI components, styles, and hooks
+│   │   ├── components/   # Common UI components
+│   │   ├── styles/       # Global styling
+│   │   ├── ui-hooks/     # Hooks related to UI behavior
+│   ├── theme/            # Theme configuration
+├── scripts/              # Utility scripts
+├── .gitignore            # Git ignored files
+├── app.json              # Expo configuration
+├── expo-env.d.ts         # Environment type definitions
+├── package.json          # Project dependencies
+├── package-lock.json     # Lock file for dependencies
+├── README.md             # Project documentation
+├── tsconfig.json         # TypeScript configuration
+```
 
-   ```bash
+## Getting Started
+
+### Prerequisites
+- Install **Node.js** (LTS recommended)
+- Install **Expo CLI**:
+  ```sh
+  npm install -g expo-cli
+  ```
+
+### Installation
+1. Clone the repository:
+   ```sh
+   git clone hhttps://github.com/EdwinLovo/SpaceX.git
+   ```
+2. Navigate to the project directory:
+   ```sh
+   cd spacex
+   ```
+3. Install dependencies:
+   ```sh
    npm install
    ```
 
-2. Start the app
+### Running the App
+- Start the development server:
+  ```sh
+  npx expo start
+  ```
+- Scan the QR code using **Expo Go** (Android/iOS) or run it in a simulator/emulator.
+  
 
-   ```bash
-    npx expo start
-   ```
+## Features
+- **Feature-based architecture** with a **simplified version of Clean Architecture**
+- **Expo Router** for navigation
+- **Offline-first architecture** using local storage and caching
+- **React Context** for global state management
+- **Reusable UI components** for consistency
+- **Modular data fetching** with custom hooks and repositories
 
-In the output, you'll find options to open the app in a
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
