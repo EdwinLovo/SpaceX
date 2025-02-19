@@ -4,7 +4,7 @@ import { useTheme } from "@/context/theme-context";
 import LoadingView from "@/presentation/shared/components/loading-view";
 import ErrorView from "@/presentation/shared/components/error-view";
 import { useRouter } from "expo-router";
-import { useFetchLaunches } from "@/data/hooks/launches/use-fetch-launches";
+import { useFetchLaunches } from "@/data/data-hooks/launches/use-fetch-launches";
 
 const AllLaunchesScreen = () => {
   const styles = useStyles();

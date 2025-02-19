@@ -9,8 +9,8 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useTheme } from "@/context/theme-context";
-import { useSignIn } from "@/data/hooks/auth/use-signin";
-import { useErrorAlert } from "@/presentation/shared/hooks/useErrorAlert";
+import { useSignIn } from "@/data/data-hooks/auth/use-signin";
+import { useErrorAlert } from "@/presentation/shared/ui-hooks/use-error-alert";
 
 const SignInScreen = () => {
   const { theme } = useTheme();
