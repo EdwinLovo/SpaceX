@@ -1,4 +1,4 @@
-import { useTheme } from "@/context/theme-context";
+import { useTheme } from "@/presentation/context/theme-context";
 import { Stack } from "expo-router";
 
 export default function LaunchLayout() {

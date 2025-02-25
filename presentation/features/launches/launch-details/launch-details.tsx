@@ -1,13 +1,15 @@
 import React from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
-import { useTheme } from "@/context/theme-context";
 import useTextStyles from "@/presentation/shared/styles/use-text-styles";
 import LoadingView from "@/presentation/shared/components/loading-view";
 import ErrorView from "@/presentation/shared/components/error-view";
-import { useFetchNextLaunch } from "@/data/data-hooks/launches/use-fetch-next-launch";
+import { useLocalSearchParams } from "expo-router";
+import { useFetchLaunchByFlightNumber } from "@/presentation/features/launches/launch-details/hooks/use-fetch-launch-by-flight-number";
+import { useTheme } from "@/presentation/context/theme-context";
 
-const NextLaunchScreen = () => {
-  const { data: launch, isLoading, error } = useFetchNextLaunch();
+const LaunchDetailsScreen = () => {
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const { data: launch, isLoading, error } = useFetchLaunchByFlightNumber(id);
 
   const textStyles = useTextStyles();
   const styles = useStyles();
@@ -62,7 +64,7 @@ const NextLaunchScreen = () => {
   );
 };
 
-export default NextLaunchScreen;
+export default LaunchDetailsScreen;
 
 const useStyles = () => {
   const { theme } = useTheme();

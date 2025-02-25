@@ -1,4 +1,4 @@
-import SignInScreen from "@/presentation/features/signin/signin";
+import SignInScreen from "@/presentation/features/auth/signin/signin";
 
 export default function SignIn() {
   return <SignInScreen />;

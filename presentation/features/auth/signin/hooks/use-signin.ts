@@ -1,4 +1,4 @@
-import { useAuth } from "@/context/auth-context";
+import { useAuth } from "@/presentation/context/auth-context";
 import { AuthRepository } from "@/data/repository/auth-repository";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "expo-router";

@@ -4,10 +4,9 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import "react-native-reanimated";
-
-import { ThemeProvider } from "@/context/theme-context";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { AuthProvider, useAuth } from "@/context/auth-context";
+import { AuthProvider, useAuth } from "@/presentation/context/auth-context";
+import { ThemeProvider } from "@/presentation/context/theme-context";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();

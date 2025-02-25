@@ -1,4 +1,4 @@
-import LaunchDetailsScreen from "@/presentation/features/launch-details/launch-details";
+import LaunchDetailsScreen from "@/presentation/features/launches/launch-details/launch-details";
 
 export default function TabTwoScreen() {
   return <LaunchDetailsScreen />;

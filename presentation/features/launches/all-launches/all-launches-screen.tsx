@@ -1,10 +1,10 @@
 import { View, FlatList, StyleSheet } from "react-native";
 import UpcomingFlightCard from "./launch-flight-card";
-import { useTheme } from "@/context/theme-context";
 import LoadingView from "@/presentation/shared/components/loading-view";
 import ErrorView from "@/presentation/shared/components/error-view";
 import { useRouter } from "expo-router";
-import { useFetchLaunches } from "@/data/data-hooks/launches/use-fetch-launches";
+import { useFetchLaunches } from "@/presentation/features/launches/all-launches/hooks/use-fetch-launches";
+import { useTheme } from "@/presentation/context/theme-context";
 
 const AllLaunchesScreen = () => {
   const styles = useStyles();

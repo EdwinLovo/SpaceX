@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import useTextStyles from "@/presentation/shared/styles/use-text-styles";
 import { Launch } from "@/data/models/response/launches/launch";
-import { useTheme } from "@/context/theme-context";
+import { useTheme } from "@/presentation/context/theme-context";
 
 interface LaunchFlightCardProps {
   launch: Launch;

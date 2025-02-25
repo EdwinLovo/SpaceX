@@ -1,4 +1,4 @@
-import NextLaunchScreen from "@/presentation/features/next-launch/next-launch-screen";
+import NextLaunchScreen from "@/presentation/features/launches/next-launch/next-launch-screen";
 
 export default function TabTwoScreen() {
   return <NextLaunchScreen />;

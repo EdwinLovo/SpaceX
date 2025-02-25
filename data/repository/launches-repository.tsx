@@ -2,7 +2,7 @@ import {
   getAllLaunchesUrl,
   getLaunchByFlightNumberUrl,
   getNextLaunchUrl,
-} from "../api/api-constants";
+} from "../constants/api-constants";
 import { Launch } from "../models/response/launches/launch";
 
 class LaunchesRepositoryImpl {

@@ -5,20 +5,33 @@ import {
   TextInput,
   Text,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { useTheme } from "@/context/theme-context";
+import { useSignIn } from "@/presentation/features/auth/signin/hooks/use-signin";
+import { useErrorAlert } from "@/presentation/shared/hooks/use-error-alert";
+import { useTheme } from "@/presentation/context/theme-context";
 
-const SignUpScreen = () => {
+const SignInScreen = () => {
   const { theme } = useTheme();
   const styles = useStyles();
   const router = useRouter();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const { mutate: login, error, isError, isPending } = useSignIn();
+
+  const handleLogin = async () => {
+    login({ username: username, password: password });
+  };
+
+  // Show alert when there is an error
+  useErrorAlert(isError, error?.message);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign Up</Text>
+      <Text style={styles.title}>Sign In</Text>
 
       <TextInput
         placeholder="Username"
@@ -37,12 +50,16 @@ const SignUpScreen = () => {
         placeholderTextColor={theme.textSecondary}
       />
 
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Sign Up</Text>
+      <TouchableOpacity onPress={handleLogin} style={styles.button}>
+        {isPending ? (
+          <ActivityIndicator size="small" color={theme.background} />
+        ) : (
+          <Text style={styles.buttonText}>Sign In</Text>
+        )}
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => router.back()}>
-        <Text style={styles.signupText}>Already have an account? Sign in</Text>
+      <TouchableOpacity onPress={() => router.push("/signup")}>
+        <Text style={styles.signupText}>Don't have an account? Sign up</Text>
       </TouchableOpacity>
     </View>
   );
@@ -95,4 +112,4 @@ const useStyles = () => {
   });
 };
 
-export default SignUpScreen;
+export default SignInScreen;
