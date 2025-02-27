@@ -1,3 +1,5 @@
+import { AuthResponse } from "../models/auth/auth-response";
+
 class AuthRepositoryImpl {
   // Simulate a login function with a delay
   async login(username: string, password: string): Promise<AuthResponse> {

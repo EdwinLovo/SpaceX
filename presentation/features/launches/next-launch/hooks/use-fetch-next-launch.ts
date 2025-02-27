@@ -1,4 +1,4 @@
-import { Launch } from "@/data/models/response/launches/launch";
+import { Launch } from "@/data/models/launches/launch";
 import { LaunchesRepository } from "@/data/repository/launches-repository";
 import { useQuery } from "@tanstack/react-query";
 

@@ -5,9 +5,11 @@ import {
   isSuccessResponse,
   statusCodes,
 } from "@react-native-google-signin/google-signin";
+import { useAuthStore } from "@/data/state/use-auth-store";
 
 export const useGoogleSignIn = () => {
   const router = useRouter();
+  const setUser = useAuthStore((state) => state.setUser);
 
   const googleSignIn = async () => {
     try {
@@ -15,8 +17,16 @@ export const useGoogleSignIn = () => {
         showPlayServicesUpdateDialog: true,
       });
       const response = await GoogleSignin.signIn();
+      console.log("Response", response);
 
-      if (isSuccessResponse(response)) {
+      if (isSuccessResponse(response) && response?.data) {
+        const { user } = response.data;
+        setUser({
+          id: user.id,
+          displayName: user.name,
+          email: user.email,
+          photoURL: user.photo,
+        })
         router.push("/home");
       } else {
         // sign in was cancelled by user
