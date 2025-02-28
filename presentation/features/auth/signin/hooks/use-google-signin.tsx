@@ -2,9 +2,10 @@ import { useRouter } from "expo-router";
 import {
   GoogleSignin,
   isErrorWithCode,
-  isSuccessResponse,
   statusCodes,
 } from "@react-native-google-signin/google-signin";
+import { signInWithCredential, GoogleAuthProvider } from "firebase/auth";
+import { auth } from "@/firebaseConfig";
 import { useAuthStore } from "@/data/state/use-auth-store";
 
 export const useGoogleSignIn = () => {
@@ -16,36 +17,56 @@ export const useGoogleSignIn = () => {
       await GoogleSignin.hasPlayServices({
         showPlayServicesUpdateDialog: true,
       });
-      const response = await GoogleSignin.signIn();
-      console.log("Response", response);
 
-      if (isSuccessResponse(response) && response?.data) {
-        const { user } = response.data;
-        setUser({
-          id: user.id,
-          displayName: user.name,
-          email: user.email,
-          photoURL: user.photo,
-        })
-        router.push("/home");
+      const response = await GoogleSignin.signIn();
+      const idToken = response.data?.idToken;
+
+      console.log("Google Sign-In Response:", response);
+
+      if (idToken) {
+        console.log("Google ID token found");
+
+        // Create a Firebase credential with the Google ID token.
+        const googleCredential = GoogleAuthProvider.credential(idToken);
+        console.log("Google credential created", googleCredential);
+
+        // Sign in with Firebase
+        const userCredential = await signInWithCredential(
+          auth,
+          googleCredential
+        );
+        const { user } = userCredential;
+
+        console.log("User signed in:", user);
+
+        if (user) {
+          setUser({
+            id: user.uid,
+            displayName: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+          });
+          router.replace("/home");
+        } else {
+          console.log("Firebase user not found");
+        }
       } else {
-        // sign in was cancelled by user
-        console.log("Error", response);
+        console.log("Google ID token not found");
       }
     } catch (error) {
       if (isErrorWithCode(error)) {
         switch (error.code) {
           case statusCodes.IN_PROGRESS:
-            // operation (eg. sign in) already in progress
+            console.log("Google Sign-In is already in progress.");
             break;
           case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
-            // Android only, play services not available or outdated
+            console.log("Google Play services not available.");
             break;
           default:
-          // some other error happened
+            console.log("Google Sign-In error:", error);
         }
       } else {
-        // an error that's not related to google sign in occurred
+        console.log("Unexpected error:", error);
       }
     }
   };

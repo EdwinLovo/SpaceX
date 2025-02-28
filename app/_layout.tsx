@@ -9,19 +9,10 @@ import { AuthProvider, useAuth } from "@/presentation/context/auth-context";
 import { ThemeProvider } from "@/presentation/context/theme-context";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
-
-const configureFirebase = () => {
-  GoogleSignin.configure({
-    webClientId:
-      "66179190792-6nmhgqpmmlfsh5m064bttjacl9clsud0.apps.googleusercontent.com",
-  });
-};
 
 export default function RootLayout() {
   const queryClient = new QueryClient();
-  configureFirebase();
 
   const [loaded] = useFonts({
     SpaceMono: require("../presentation/assets/fonts/SpaceMono-Regular.ttf"),
@@ -32,6 +23,13 @@ export default function RootLayout() {
       SplashScreen.hideAsync();
     }
   }, [loaded]);
+
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        "66179190792-6nmhgqpmmlfsh5m064bttjacl9clsud0.apps.googleusercontent.com",
+    });
+  }, []);
 
   if (!loaded) {
     return null;
