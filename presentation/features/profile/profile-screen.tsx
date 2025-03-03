@@ -1,4 +1,5 @@
 import { useAuthStore } from "@/data/state/use-auth-store";
+import { useAuth } from "@/presentation/context/auth-context";
 import { useTheme } from "@/presentation/context/theme-context";
 import ErrorView from "@/presentation/shared/components/error-view";
 import useTextStyles from "@/presentation/shared/styles/use-text-styles";
@@ -14,9 +15,11 @@ const ProfileScreen = () => {
 
   const user = useAuthStore((state) => state.user);
   const onSignOut = useAuthStore((state) => state.signOut);
+  const { logout } = useAuth();
 
   const handleSignOut = async () => {
     await onSignOut();
+    await logout();
     router.replace("/"); // Navigate to login after signing out
   };
 

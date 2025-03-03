@@ -38,7 +38,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = async (newToken: string) => {
-    console.log("login", newToken);
     await SecureStore.setItemAsync("jwt_token", newToken);
     setToken(newToken);
   };

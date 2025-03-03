@@ -7,28 +7,24 @@ import {
 import { signInWithCredential, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "@/firebaseConfig";
 import { useAuthStore } from "@/data/state/use-auth-store";
+import { useAuth } from "@/presentation/context/auth-context";
 
 export const useGoogleSignIn = () => {
   const router = useRouter();
   const setUser = useAuthStore((state) => state.setUser);
+  const { login } = useAuth();
 
   const googleSignIn = async () => {
     try {
       await GoogleSignin.hasPlayServices({
         showPlayServicesUpdateDialog: true,
       });
-
       const response = await GoogleSignin.signIn();
       const idToken = response.data?.idToken;
 
-      console.log("Google Sign-In Response:", response);
-
       if (idToken) {
-        console.log("Google ID token found");
-
         // Create a Firebase credential with the Google ID token.
         const googleCredential = GoogleAuthProvider.credential(idToken);
-        console.log("Google credential created", googleCredential);
 
         // Sign in with Firebase
         const userCredential = await signInWithCredential(
@@ -37,8 +33,6 @@ export const useGoogleSignIn = () => {
         );
         const { user } = userCredential;
 
-        console.log("User signed in:", user);
-
         if (user) {
           setUser({
             id: user.uid,
@@ -46,6 +40,8 @@ export const useGoogleSignIn = () => {
             email: user.email,
             photoURL: user.photoURL,
           });
+          const token = await user.getIdToken();
+          login(token);
           router.replace("/home");
         } else {
           console.log("Firebase user not found");
