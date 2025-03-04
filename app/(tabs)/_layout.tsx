@@ -49,6 +49,17 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="ai"
+        options={{
+          title: "AI",
+          headerTitle: "AI Helper",
+          headerShown: true,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="rocket" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="profile"
         options={{
           title: "Profile",
