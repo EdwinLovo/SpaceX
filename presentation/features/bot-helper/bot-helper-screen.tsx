@@ -7,15 +7,20 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
+  ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { useTheme } from "@/presentation/context/theme-context";
+import * as FileSystem from "expo-file-system";
 
 const AIHelperScreen = () => {
   const [image, setImage] = useState<string | null>(null);
   const [base64, setBase64] = useState<string | null>(null);
   const [message, setMessage] = useState<string>("");
   const { theme } = useTheme();
+  const [loading, setLoading] = useState(false);
+  const [geminiResponse, setGeminiResponse] = useState<string | null>(null);
 
   const pickImage = async () => {
     const permissionResult =
@@ -28,13 +33,19 @@ const AIHelperScreen = () => {
 
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ["images"],
-      base64: true,
-      quality: 1,
+      quality: 1, // Remove base64: true, we'll get it manually
     });
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
-      setBase64(result.assets[0].base64 || null);
+      // Get base64 manually
+      const base64String = await FileSystem.readAsStringAsync(
+        result.assets[0].uri,
+        {
+          encoding: FileSystem.EncodingType.Base64,
+        }
+      );
+      setBase64(base64String);
     }
   };
 
@@ -44,24 +55,71 @@ const AIHelperScreen = () => {
       return;
     }
 
+    setLoading(true);
+    setGeminiResponse(null);
+
     try {
-      const response = await fetch("https://your-api-endpoint.com/upload", {
+      const payload = {
+        contents: [
+          {
+            parts: [
+              {
+                inlineData: {
+                  mimeType: "image/jpeg", // Adjust if needed
+                  data: base64,
+                },
+              },
+              {
+                text: message,
+              },
+            ],
+          },
+        ],
+      };
+
+      const API_ENDPOINT =
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"; // Replace
+      const API_KEY = "AIzaSyBZEwCzt82HhqqNqUgtvuzF1FLrDYEVkiY"; // Replace
+
+      const response = await fetch(`${API_ENDPOINT}?key=${API_KEY}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ image: base64, message }),
+        body: JSON.stringify(payload),
       });
 
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data = await response.json();
-      Alert.alert("Success", "Image and message uploaded successfully!");
+
+      if (
+        data &&
+        data.candidates &&
+        data.candidates[0].content &&
+        data.candidates[0].content.parts
+      ) {
+        setGeminiResponse(data.candidates[0].content.parts[0].text);
+      } else {
+        setGeminiResponse("Error: Could not process image.");
+      }
     } catch (error) {
-      Alert.alert("Error", "Failed to upload data");
+      console.error("Error analyzing image:", error);
+      setGeminiResponse(`Error: ${error}`);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
+    <ScrollView // Wrap the entire content in a ScrollView
+      contentContainerStyle={[
+        styles.scrollViewContainer,
+        { backgroundColor: theme.background },
+      ]}
+    >
       <View style={styles.topContainer}>
         {image ? (
           <TouchableOpacity onPress={pickImage}>
@@ -103,14 +161,26 @@ const AIHelperScreen = () => {
       <TouchableOpacity
         style={[styles.button, { backgroundColor: theme.secondary }]}
         onPress={uploadData}
+        disabled={loading}
       >
         <Text style={styles.buttonText}>Upload</Text>
       </TouchableOpacity>
-    </View>
+      {loading && <ActivityIndicator size="large" />}
+      {geminiResponse && (
+        <View style={styles.responseContainer}>
+          <Text style={{ color: theme.textPrimary }}>{geminiResponse}</Text>
+        </View>
+      )}
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  scrollViewContainer: {
+    flexGrow: 1,
+    padding: 16,
+    justifyContent: "space-between",
+  },
   container: {
     flex: 1,
     padding: 16,
@@ -158,6 +228,12 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontWeight: "bold",
+  },
+  responseContainer: {
+    marginTop: 20,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#ccc",
   },
 });
 

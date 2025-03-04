@@ -55,7 +55,7 @@ export default function TabLayout() {
           headerTitle: "AI Helper",
           headerShown: true,
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="rocket" size={size} color={color} />
+            <Ionicons name="rocket-outline" size={size} color={color} />
           ),
         }}
       />
