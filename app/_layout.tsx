@@ -7,8 +7,8 @@ import "react-native-reanimated";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider, useAuth } from "@/presentation/context/auth-context";
 import { ThemeProvider } from "@/presentation/context/theme-context";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -23,6 +23,13 @@ export default function RootLayout() {
       SplashScreen.hideAsync();
     }
   }, [loaded]);
+
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        "66179190792-6nmhgqpmmlfsh5m064bttjacl9clsud0.apps.googleusercontent.com",
+    });
+  }, []);
 
   if (!loaded) {
     return null;

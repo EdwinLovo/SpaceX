@@ -11,11 +11,14 @@ import { useRouter } from "expo-router";
 import { useSignIn } from "@/presentation/features/auth/signin/hooks/use-signin";
 import { useErrorAlert } from "@/presentation/shared/hooks/use-error-alert";
 import { useTheme } from "@/presentation/context/theme-context";
+import { GoogleSigninButton } from "@react-native-google-signin/google-signin";
+import { useGoogleSignIn } from "./hooks/use-google-signin";
 
 const SignInScreen = () => {
   const { theme } = useTheme();
   const styles = useStyles();
   const router = useRouter();
+  const { googleSignIn } = useGoogleSignIn();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -61,6 +64,13 @@ const SignInScreen = () => {
       <TouchableOpacity onPress={() => router.push("/signup")}>
         <Text style={styles.signupText}>Don't have an account? Sign up</Text>
       </TouchableOpacity>
+
+      <GoogleSigninButton
+        style={styles.googleButton}
+        size={GoogleSigninButton.Size.Wide}
+        color={GoogleSigninButton.Color.Dark}
+        onPress={googleSignIn}
+      />
     </View>
   );
 };
@@ -103,6 +113,10 @@ const useStyles = () => {
       fontSize: 16,
       fontWeight: "bold",
       color: theme.background,
+    },
+    googleButton: {
+      width: "100%",
+      marginTop: 16,
     },
     signupText: {
       marginTop: 16,

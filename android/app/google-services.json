@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "66179190792",
+    "project_id": "space-x-84af6",
+    "storage_bucket": "space-x-84af6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:66179190792:android:e5fdc006274f7ad31301bd",
+        "android_client_info": {
+          "package_name": "com.edwinlovoravn.SpaceX"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "66179190792-28qqro4q34b2bkrnsn9m5p0df02ratc1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.edwinlovoravn.SpaceX",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "66179190792-6nmhgqpmmlfsh5m064bttjacl9clsud0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDq9g2jv_hg483DgnfGMRScQGc379XvsCQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "66179190792-6nmhgqpmmlfsh5m064bttjacl9clsud0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "66179190792-hc8971ho1mtvntqaha7p4evdi4qinrm8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.edwinlovoravn.SpaceX"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

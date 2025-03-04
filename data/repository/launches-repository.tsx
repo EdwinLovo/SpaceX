@@ -3,7 +3,7 @@ import {
   getLaunchByFlightNumberUrl,
   getNextLaunchUrl,
 } from "../constants/api-constants";
-import { Launch } from "../models/response/launches/launch";
+import { Launch } from "../models/launches/launch";
 
 class LaunchesRepositoryImpl {
   async getAllLaunches(): Promise<Launch[]> {
