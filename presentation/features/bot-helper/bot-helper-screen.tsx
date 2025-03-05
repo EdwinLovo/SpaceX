@@ -10,111 +10,37 @@ import {
   ActivityIndicator,
   ScrollView,
 } from "react-native";
-import * as ImagePicker from "expo-image-picker";
 import { useTheme } from "@/presentation/context/theme-context";
-import * as FileSystem from "expo-file-system";
+import { useAIHelper } from "./hooks/use-ai-bot";
+import { useImagePicker } from "./hooks/use-image-picker";
 
 const AIHelperScreen = () => {
-  const [image, setImage] = useState<string | null>(null);
-  const [base64, setBase64] = useState<string | null>(null);
-  const [message, setMessage] = useState<string>("");
   const { theme } = useTheme();
-  const [loading, setLoading] = useState(false);
-  const [geminiResponse, setGeminiResponse] = useState<string | null>(null);
+  const { image, base64, pickImage } = useImagePicker();
+  const [message, setMessage] = useState<string>("");
+  const aiHelperMutation = useAIHelper();
 
-  const pickImage = async () => {
-    const permissionResult =
-      await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-    if (permissionResult.status !== "granted") {
-      Alert.alert("Permission Denied", "You need to allow access to proceed.");
-      return;
-    }
-
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ["images"],
-      quality: 1, // Remove base64: true, we'll get it manually
-    });
-
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-      // Get base64 manually
-      const base64String = await FileSystem.readAsStringAsync(
-        result.assets[0].uri,
-        {
-          encoding: FileSystem.EncodingType.Base64,
-        }
-      );
-      setBase64(base64String);
-    }
-  };
-
-  const uploadData = async () => {
+  const uploadData = () => {
     if (!base64 || !message.trim()) {
       Alert.alert("Error", "Please select an image and enter a message.");
       return;
     }
 
-    setLoading(true);
-    setGeminiResponse(null);
-
-    try {
-      const payload = {
-        contents: [
-          {
-            parts: [
-              {
-                inlineData: {
-                  mimeType: "image/jpeg", // Adjust if needed
-                  data: base64,
-                },
-              },
-              {
-                text: message,
-              },
-            ],
-          },
-        ],
-      };
-
-      const API_ENDPOINT =
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"; // Replace
-      const API_KEY = "AIzaSyBZEwCzt82HhqqNqUgtvuzF1FLrDYEVkiY"; // Replace
-
-      const response = await fetch(`${API_ENDPOINT}?key=${API_KEY}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+    aiHelperMutation.mutate(
+      { base64, message },
+      {
+        onSuccess: (response) => {
+          Alert.alert("Success", response);
         },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        onError: (error) => {
+          Alert.alert("Error", error.message);
+        },
       }
-
-      const data = await response.json();
-
-      if (
-        data &&
-        data.candidates &&
-        data.candidates[0].content &&
-        data.candidates[0].content.parts
-      ) {
-        setGeminiResponse(data.candidates[0].content.parts[0].text);
-      } else {
-        setGeminiResponse("Error: Could not process image.");
-      }
-    } catch (error) {
-      console.error("Error analyzing image:", error);
-      setGeminiResponse(`Error: ${error}`);
-    } finally {
-      setLoading(false);
-    }
+    );
   };
 
   return (
-    <ScrollView // Wrap the entire content in a ScrollView
+    <ScrollView
       contentContainerStyle={[
         styles.scrollViewContainer,
         { backgroundColor: theme.background },
@@ -161,14 +87,17 @@ const AIHelperScreen = () => {
       <TouchableOpacity
         style={[styles.button, { backgroundColor: theme.secondary }]}
         onPress={uploadData}
-        disabled={loading}
+        disabled={aiHelperMutation.isPending}
       >
         <Text style={styles.buttonText}>Upload</Text>
       </TouchableOpacity>
-      {loading && <ActivityIndicator size="large" />}
-      {geminiResponse && (
+
+      {aiHelperMutation.isPending && <ActivityIndicator size="large" />}
+      {aiHelperMutation.isSuccess && (
         <View style={styles.responseContainer}>
-          <Text style={{ color: theme.textPrimary }}>{geminiResponse}</Text>
+          <Text style={{ color: theme.textPrimary }}>
+            {aiHelperMutation.data}
+          </Text>
         </View>
       )}
     </ScrollView>
@@ -178,11 +107,6 @@ const AIHelperScreen = () => {
 const styles = StyleSheet.create({
   scrollViewContainer: {
     flexGrow: 1,
-    padding: 16,
-    justifyContent: "space-between",
-  },
-  container: {
-    flex: 1,
     padding: 16,
     justifyContent: "space-between",
   },
