@@ -3,7 +3,6 @@ import {
   View,
   Image,
   Alert,
-  TextInput,
   StyleSheet,
   TouchableOpacity,
   Text,
@@ -11,32 +10,39 @@ import {
   ScrollView,
 } from "react-native";
 import { useTheme } from "@/presentation/context/theme-context";
-import { useAIHelper } from "./hooks/use-ai-bot";
 import { useImagePicker } from "./hooks/use-image-picker";
+import { useAIHelper } from "./hooks/use-ai-bot";
+import { ImageAnalysis } from "@/data/models/ai/image-analysis";
+import AnalysisView from "./analysis-view";
 
 const AIHelperScreen = () => {
   const { theme } = useTheme();
-  const { image, base64, pickImage } = useImagePicker();
-  const [message, setMessage] = useState<string>("");
+  const { image, base64, pickImage, clearImage } = useImagePicker();
   const aiHelperMutation = useAIHelper();
+  const [imageAnalysis, setImageAnalysis] = useState<ImageAnalysis>();
 
   const uploadData = () => {
-    if (!base64 || !message.trim()) {
-      Alert.alert("Error", "Please select an image and enter a message.");
+    if (!base64) {
+      Alert.alert("Error", "Please select an image.");
       return;
     }
 
     aiHelperMutation.mutate(
-      { base64, message },
+      { base64 },
       {
         onSuccess: (response) => {
-          Alert.alert("Success", response);
+          setImageAnalysis(response);
         },
         onError: (error) => {
           Alert.alert("Error", error.message);
         },
       }
     );
+  };
+
+  const clearData = () => {
+    setImageAnalysis(undefined);
+    clearImage();
   };
 
   return (
@@ -69,36 +75,27 @@ const AIHelperScreen = () => {
             </Text>
           </TouchableOpacity>
         )}
-
-        <TextInput
-          style={[
-            styles.input,
-            { borderColor: theme.textSecondary, color: theme.textPrimary },
-          ]}
-          placeholder="Enter your message..."
-          placeholderTextColor={theme.textSecondary}
-          multiline
-          numberOfLines={4}
-          value={message}
-          onChangeText={setMessage}
-        />
       </View>
 
-      <TouchableOpacity
-        style={[styles.button, { backgroundColor: theme.secondary }]}
-        onPress={uploadData}
-        disabled={aiHelperMutation.isPending}
-      >
-        <Text style={styles.buttonText}>Upload</Text>
-      </TouchableOpacity>
-
       {aiHelperMutation.isPending && <ActivityIndicator size="large" />}
-      {aiHelperMutation.isSuccess && (
-        <View style={styles.responseContainer}>
-          <Text style={{ color: theme.textPrimary }}>
-            {aiHelperMutation.data}
-          </Text>
-        </View>
+
+      {imageAnalysis && <AnalysisView imageAnalysis={imageAnalysis} />}
+
+      {imageAnalysis ? (
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: theme.primary }]}
+          onPress={clearData}
+        >
+          <Text style={styles.buttonText}>Clear Data</Text>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: theme.secondary }]}
+          onPress={uploadData}
+          disabled={aiHelperMutation.isPending}
+        >
+          <Text style={styles.buttonText}>Upload</Text>
+        </TouchableOpacity>
       )}
     </ScrollView>
   );
@@ -133,15 +130,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-  input: {
-    width: "100%",
-    height: 100,
-    borderWidth: 1,
-    padding: 10,
-    marginBottom: 10,
-    textAlignVertical: "top",
-    borderRadius: 5,
-  },
   button: {
     width: "100%",
     padding: 15,
@@ -152,12 +140,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontWeight: "bold",
-  },
-  responseContainer: {
-    marginTop: 20,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: "#ccc",
   },
 });
 

@@ -34,5 +34,10 @@ export const useImagePicker = () => {
     }
   };
 
-  return { image, base64, pickImage };
+  const clearImage = () => {
+    setImage(null);
+    setBase64(null);
+  };
+
+  return { image, base64, pickImage, clearImage };
 };

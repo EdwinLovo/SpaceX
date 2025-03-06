@@ -1,9 +1,24 @@
+import { ImageAnalysis } from "../models/ai/image-analysis";
+
 class AIHelperRepositoryImpl {
   private API_ENDPOINT =
     "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"; // Replace
-  private API_KEY = "AIzaSyD9ucACadff7qIHejpjzqp6zhZmNA8ttkk"; // Replace
+  private API_KEY = "PLACEHOLDER"; // Replace
 
-  async sendImageAndMessage(base64: string, message: string): Promise<string> {
+  async sendGolfDataForAnalysis(base64: string): Promise<ImageAnalysis> {
+    const prompt = `
+      Give me an analysis of my golf data. 
+      Respond with a valid JSON object only—no Markdown formatting, no code blocks, no explanations, and no extra characters.
+      Directly return a JSON object in this exact structure:
+        {
+          "summary": string,
+          "keyPoints": string,
+          "recommendations": string,
+          "insights": string
+          "conclusion": string
+        }
+    `;
+
     const payload = {
       contents: [
         {
@@ -15,7 +30,7 @@ class AIHelperRepositoryImpl {
               },
             },
             {
-              text: message,
+              text: prompt,
             },
           ],
         },
@@ -35,6 +50,7 @@ class AIHelperRepositoryImpl {
     }
 
     const data = await response.json();
+    console.log("data: ", data.candidates[0].content.parts[0].text);
 
     if (
       data &&
@@ -42,9 +58,20 @@ class AIHelperRepositoryImpl {
       data.candidates[0].content &&
       data.candidates[0].content.parts
     ) {
-      return data.candidates[0].content.parts[0].text;
+      try {
+        // Parse the JSON response text into our model
+        const analysis: ImageAnalysis = JSON.parse(
+          data.candidates[0].content.parts[0].text
+            .replace(/^```json/, "")
+            .replace(/```$/, "")
+            .trim()
+        );
+        return analysis;
+      } catch (error) {
+        throw new Error("Failed to parse AI response into JSON format.");
+      }
     } else {
-      throw new Error("Error: Could not process image.");
+      throw new Error("Error: AI response structure is invalid.");
     }
   }
 }

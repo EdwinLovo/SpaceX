@@ -1,9 +1,10 @@
+import { ImageAnalysis } from "@/data/models/ai/image-analysis";
 import { AIHelperRepository } from "@/data/repository/ai-repository";
 import { useMutation } from "@tanstack/react-query";
 
 export const useAIHelper = () => {
-  return useMutation({
-    mutationFn: ({ base64, message }: { base64: string; message: string }) =>
-      AIHelperRepository.sendImageAndMessage(base64, message),
+  return useMutation<ImageAnalysis, Error, { base64: string }>({
+    mutationFn: ({ base64 }) =>
+      AIHelperRepository.sendGolfDataForAnalysis(base64),
   });
 };
