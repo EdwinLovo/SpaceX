@@ -10,10 +10,10 @@ import {
   ScrollView,
 } from "react-native";
 import { useTheme } from "@/presentation/context/theme-context";
-import { useImagePicker } from "./hooks/use-image-picker";
+import { useImagePicker } from "../shared/hooks/use-image-picker";
 import { useGemini } from "./hooks/use-gemini";
 import { ImageAnalysis } from "@/data/models/ai/image-analysis";
-import AnalysisView from "./analysis-view";
+import AnalysisView from "../shared/components/analysis-view";
 
 const GeminiScreen = () => {
   const { theme } = useTheme();

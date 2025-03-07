@@ -1762,10 +1762,10 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNFBApp (21.11.0):
+  - RNFBApp (21.12.0):
     - Firebase/CoreOnly (= 11.8.0)
     - React-Core
-  - RNFBAuth (21.11.0):
+  - RNFBAuth (21.12.0):
     - Firebase/Auth (= 11.8.0)
     - React-Core
     - RNFBApp
@@ -2348,8 +2348,8 @@ SPEC CHECKSUMS:
   ReactCommon: 407be731d21caa89dfb2f648868865b76c84d2d2
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   RNCAsyncStorage: ed97da7a45c1af0c6a938c8b66da1ec24792fcab
-  RNFBApp: f9c347f09f0c87e1d49ff8a216c7475763bf28a7
-  RNFBAuth: acba776a0930fc6e910dc63c1f11a11390d4aee9
+  RNFBApp: 7cf039683867cbf8514bc3aafd756e6c5fb18898
+  RNFBAuth: 1061296d2bc41c449e4ba90c537eb1346c9c5cfc
   RNGestureHandler: 598e45cedb905b157e9764acbef0b5e365693451
   RNGoogleSignin: e6042bbbe55861535b2a5a3aed7de1a5e7d92aac
   RNReanimated: ddc60075b382b872662cadaf9972b07d52a8fce7

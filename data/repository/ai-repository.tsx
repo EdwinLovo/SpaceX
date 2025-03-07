@@ -1,11 +1,17 @@
 import { ImageAnalysis } from "../models/ai/image-analysis";
+import {
+  getVertexAI,
+  getGenerativeModel,
+  Schema,
+} from "@react-native-firebase/vertexai";
+import { app } from "@/firebaseConfig";
 
 class AIHelperRepositoryImpl {
   private API_ENDPOINT =
     "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"; // Replace
   private API_KEY = "PLACEHOLDER"; // Replace
 
-  async sendGolfDataForAnalysis(base64: string): Promise<ImageAnalysis> {
+  async dataAnalysisGemini(base64: string): Promise<ImageAnalysis> {
     const prompt = `
       Give me an analysis of my golf data. 
       Respond with a valid JSON object only—no Markdown formatting, no code blocks, no explanations, and no extra characters.
@@ -72,6 +78,49 @@ class AIHelperRepositoryImpl {
       }
     } else {
       throw new Error("Error: AI response structure is invalid.");
+    }
+  }
+
+  async dataAnalysisVertex(base64: string): Promise<ImageAnalysis> {
+    const firebaseApp = app;
+    const vertexai = getVertexAI(firebaseApp);
+
+    const jsonSchema = Schema.object({
+      properties: {
+        summary: Schema.string(),
+        keyPoints: Schema.string(),
+        recommendations: Schema.string(),
+        insights: Schema.string(),
+        conclusion: Schema.string(),
+      },
+    });
+
+    const model = getGenerativeModel(vertexai, {
+      model: "gemini-2.0-flash",
+      generationConfig: {
+        responseMimeType: "application/json",
+        responseSchema: jsonSchema,
+      },
+    });
+
+    const prompt = `Give me an analysis of my golf data.`;
+
+    const result = await model.generateContent([
+      {
+        inlineData: {
+          mimeType: "image/jpeg",
+          data: base64,
+        },
+      },
+      { text: prompt },
+    ]);
+
+    const responseText = result.response.text();
+    try {
+      const analysis: ImageAnalysis = JSON.parse(responseText);
+      return analysis;
+    } catch (error) {
+      throw new Error("Failed to parse AI response.");
     }
   }
 }
