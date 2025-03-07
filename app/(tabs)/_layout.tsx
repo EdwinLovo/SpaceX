@@ -49,13 +49,24 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="ai"
+        name="gemini"
         options={{
-          title: "AI",
-          headerTitle: "AI Helper",
+          title: "Gemini",
+          headerTitle: "Gemini",
           headerShown: true,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="rocket-outline" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="vertex"
+        options={{
+          title: "Vertex",
+          headerTitle: "Vertex",
+          headerShown: true,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="cog-outline" size={size} color={color} />
           ),
         }}
       />

@@ -11,14 +11,14 @@ import {
 } from "react-native";
 import { useTheme } from "@/presentation/context/theme-context";
 import { useImagePicker } from "./hooks/use-image-picker";
-import { useAIHelper } from "./hooks/use-ai-bot";
+import { useGemini } from "./hooks/use-gemini";
 import { ImageAnalysis } from "@/data/models/ai/image-analysis";
 import AnalysisView from "./analysis-view";
 
-const AIHelperScreen = () => {
+const GeminiScreen = () => {
   const { theme } = useTheme();
   const { image, base64, pickImage, clearImage } = useImagePicker();
-  const aiHelperMutation = useAIHelper();
+  const aiHelperMutation = useGemini();
   const [imageAnalysis, setImageAnalysis] = useState<ImageAnalysis>();
 
   const uploadData = () => {
@@ -143,4 +143,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AIHelperScreen;
+export default GeminiScreen;
