@@ -9,7 +9,7 @@ import { app } from "@/firebaseConfig";
 class AIHelperRepositoryImpl {
   private API_ENDPOINT =
     "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"; // Replace
-  private API_KEY = "PLACEHOLDER"; // Replace
+  private API_KEY = "AIzaSyAtupoq-vZt2HKH3eOhUyC4ag9gCNydhug"; // Replace
 
   async dataAnalysisGemini(base64: string): Promise<ImageAnalysis> {
     const prompt = `

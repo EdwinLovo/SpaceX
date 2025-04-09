@@ -6,32 +6,42 @@ A **React Native** application built with **Expo** that follows a **feature-base
 
 ```
 📦 SpaceX
-├── .expo/                
-├── .vscode/              
-├── app/                  # Handles navigation and layout using Expo Router
-├── context/              # Global React context providers (Auth, Theme, etc.)
-├── data/                 # Data handling (API, database, preferences, etc.)
-│   ├── api/              # API endpoint constants
-│   ├── data-hooks/       # Custom hooks for data retrieval
-│   ├── models/           # TypeScript models for data types
-│   ├── repository/       # Manages data retrieval from API, DB, etc.
-├── node_modules/         
-├── presentation/         # UI layer
-│   ├── assets/           # Common assets
-│   ├── features/         # Screens, feature-specific components, hooks, constants
-│   ├── shared/           # Reusable UI components, styles, and hooks, etc.
-│   │   ├── components/   # Common UI components
-│   │   ├── styles/       # Global styling
-│   │   ├── ui-hooks/     # Hooks related to UI behavior
-│   ├── theme/            # Theme configuration
-├── scripts/              
-├── .gitignore            
-├── app.json              
-├── expo-env.d.ts         
-├── package.json          
-├── package-lock.json     
-├── README.md             
-├── tsconfig.json         
+├── 📁 app/                              # Handles navigation and layout using Expo Router
+├── 📁 data/                             # Data layer
+│   ├── 📁 constants/                    # App-wide constant values
+│   ├── 📁 models/                       # TypeScript interfaces and types
+│   ├── 📁 repository/                   # Data sources (API, DB, etc.)
+│   └── 📁 state/                        # Zustand store for state management
+├── 📁 node_modules/                     
+├── 📁 presentation/                    # UI layer
+│   ├── 📁 assets/                       # Static assets like images and fonts
+│   ├── 📁 context/                      # Global React context providers (Auth, Theme, etc.)
+│   ├── 📁 features/                     # Feature-based folders for screens and logic
+│   │   ├── 📁 ai/                       # AI-related screens
+│   │   ├── 📁 auth/                     # Authentication flow
+│   │   │   ├── 📁 signin/              
+│   │   │   │   ├── 📁 hooks/            # Custom hooks for the Sign In screen
+│   │   │   │   └── 📄 signin.tsx        # Sign In screen
+│   │   │   └── 📁 signup/               # Sign Up screen
+│   │   ├── 📁 launches/                 # Launch-related features
+│   │   │   ├── 📁 all-launches/        
+│   │   │   │   ├── 📁 hooks/            # Hooks for All Launches screen
+│   │   │   │   ├── 📄 all-launches-screen.tsx
+│   │   │   │   └── 📄 launch-flight-card.tsx
+│   │   │   ├── 📁 launch-details/       # Launch Details screen
+│   │   │   └── 📁 next-launch/          # Next Launch screen
+│   │   └── 📁 profile/                  # User profile screen
+│   └── 📁 shared/                       # Reusable UI utilities
+│       ├── 📁 components/               # Common components
+│       ├── 📁 hooks/                    # Shared UI hooks
+│       └── 📁 styles/                   # Global styles
+├── 📄 .gitignore
+├── 📄 app.json
+├── 📄 expo-env.d.ts
+├── 📄 package.json
+├── 📄 package-lock.json
+├── 📄 README.md
+└── 📄 tsconfig.json
 ```
 
 ## Getting Started
